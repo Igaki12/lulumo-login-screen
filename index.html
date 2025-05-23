@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuLuMo ログイン</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Orbitron:wght@700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            /* 挑戦的なアニメーションするグラデーション背景 */
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            color: #fff; /* 基本の文字色を白に */
+            
+        }
+
+        .lulumo-title {
+            font-family: 'Orbitron', sans-serif; /* より未来的、おしゃれなフォント */
+            font-weight: 700;
+            /* テキストにグラデーションを適用 */
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FF6347); /* ゴールドからオレンジ、トマト色へ */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 
+                         0 0 10px rgba(255,255,255,0.3),
+                         0 0 20px rgba(255,165,0,0.5); /* 複数の影で立体感と輝き */
+            letter-spacing: 2px;
+        }
+
+        .form-container {
+            /* ガラス形態（Glassmorphism）風スタイル */
+            background: rgba(255, 255, 255, 0.1); /* 半透明の白 */
+            backdrop-filter: blur(10px); /* 背景をぼかす */
+            -webkit-backdrop-filter: blur(10px); /* Safari用 */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* より強調された影 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* 高さ方向の中央にコンテナが配置されるように、maginなどを修正 */
+            margin-top: auto;
+            margin-bottom: auto;
+            /* paddingやwidthはそのまま */
+            
+        }
+        .form-container:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+        }
+
+        .input-custom {
+            background: rgba(255, 255, 255, 0.15); /* 入力フィールドも半透明に */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff; /* 入力文字色を白に */
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .input-custom::placeholder { /* placeholderの文字色 */
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .input-custom:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 215, 0, 0.7); /* フォーカス時はゴールドっぽく */
+            box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25);
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, #FF8C00, #FF4500); /* ボタンもグラデーション */
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(255, 100, 0, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        .btn-custom:hover {
+            background: linear-gradient(135deg, #FF4500, #FF8C00);
+            box-shadow: 0 6px 20px rgba(255, 100, 0, 0.6);
+            transform: translateY(-2px);
+        }
+        .btn-custom:active {
+            transform: translateY(0px);
+            box-shadow: 0 2px 10px rgba(255, 100, 0, 0.3);
+        }
+
+        .footer-custom {
+            background: rgba(0, 0, 0, 0.2); /* フッターも半透明に */
+            color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        .password-toggle svg {
+            stroke: rgba(255,255,255,0.7);
+        }
+        .password-toggle:hover svg {
+            stroke: #FFD700; /* ゴールド */
+        }
+        .link-custom {
+            color: #FFD700; /* ゴールド */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        .link-custom:hover {
+            color: #FFA500; /* オレンジ */
+            text-shadow: 0 0 8px rgba(255,215,0,0.7);
+        }
+        label {
+            color: rgba(255,255,255,0.8);
+            font-weight: 300; /* 少し細めのフォントウェイト */
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen items-center justify-center p-4">
+
+    <main class="form-container shadow-xl rounded-xl p-8 md:p-12 w-full max-w-md">
+        <div class="text-center mb-12">
+            <h1 class="lulumo-title text-6xl md:text-7xl">LuLuMo</h1>
+        </div>
+
+        <form id="loginForm">
+            <div class="mb-6">
+                <label for="email" class="block text-sm font-medium mb-1">Eメールアドレス</label>
+                <input type="email" id="email" name="email" required
+                       class="input-custom w-full px-4 py-3 rounded-lg focus:outline-none"
+                       placeholder="your@email.com">
+            </div>
+
+            <div class="mb-8"> 
+                <label for="password" class="block text-sm font-medium mb-1">パスワード</label>
+                <div class="relative">
+                    <input type="password" id="password" name="password" required
+                           class="input-custom w-full px-4 py-3 rounded-lg focus:outline-none pr-10"
+                           placeholder="••••••••">
+                    <span id="togglePassword" class="password-toggle absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                        <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                        <svg id="eyeSlashIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="mb-8"> 
+                <button type="submit"
+                        class="btn-custom w-full font-semibold py-3.5 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-amber-400">
+                    ログイン
+                </button>
+            </div>
+
+            <!-- <div class="text-center text-sm">
+                <a href="#" class="link-custom font-medium">パスワードをお忘れですか？</a>
+            </div>
+             <div class="text-center text-sm mt-3">
+                <a href="#" class="link-custom font-medium">アカウントを作成</a>
+            </div> -->
+        </form>
+    </main>
+
+    <footer class="footer-custom w-full text-center p-4 mt-auto">
+        <p class="text-sm">&copy; 2025 Happyman. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const togglePasswordButton = document.getElementById('togglePassword');
+        const eyeIcon = document.getElementById('eyeIcon');
+        const eyeSlashIcon = document.getElementById('eyeSlashIcon');
+
+        togglePasswordButton.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            eyeIcon.classList.toggle('hidden');
+            eyeSlashIcon.classList.toggle('hidden');
+        });
+
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            const email = document.getElementById('email').value;
+            const password = passwordInput.value;
+
+            // 既存のメッセージがあれば削除
+            const existingMessages = loginForm.querySelectorAll('.form-message');
+            existingMessages.forEach(msg => msg.remove());
+
+            if (!email || !password) {
+                displayMessage('Eメールとパスワードを入力してください。', 'error');
+                return;
+            }
+            
+            displayMessage('ログイン試行中...', 'info');
+            console.log('Email:', email);
+            console.log('Password:', password);
+            // 実際のログイン処理はここに記述
+        });
+
+        function displayMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = message;
+            messageDiv.className = 'form-message text-center mb-4 text-sm'; // Tailwindクラスでスタイリング
+            if (type === 'error') {
+                messageDiv.classList.add('text-red-400'); // エラー時は赤文字
+            } else if (type === 'info') {
+                messageDiv.classList.add('text-blue-300'); // 情報時は青文字
+            } else {
+                messageDiv.classList.add('text-gray-300'); // デフォルト
+            }
+            loginForm.prepend(messageDiv); // フォームの先頭にメッセージを挿入
+            
+            // 一定時間後にメッセージを消す場合
+            // setTimeout(() => messageDiv.remove(), 5000);
+        }
+    </script>
+
+</body>
+</html>

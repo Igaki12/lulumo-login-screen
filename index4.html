@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuLuMo ログイン</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px; /* Base font size */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FFD8A8, #FFB5A7); /* Apricot to Salmon Pink gradient */
+            color: #4A3F35; /* Dark Brown for text */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            padding: 20px;
+        }
+
+        /* Login Container */
+        .login-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+            padding: 35px 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.25); /* Softer SaddleBrown shadow */
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Logo */
+        .logo {
+            font-family: 'Pacifico', cursive;
+            font-size: 4.5rem; /* Responsive font size */
+            color: #D2691E; /* Chocolate */
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+            animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.2s backwards;
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: #7A5C58; /* Muted brown */
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #FFDAB9; /* Light Peach */
+            border-radius: 12px;
+            font-size: 1rem;
+            color: #4A3F35;
+            background-color: #FFF8F0; /* Very light cream */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-field::placeholder {
+            color: #B0A090; /* Muted placeholder color */
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #FFB5A7; /* Salmon Pink */
+            box-shadow: 0 0 0 3px rgba(255, 181, 167, 0.3); /* Soft glow */
+        }
+
+        /* Password Wrapper */
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-wrapper .input-field {
+            padding-right: 45px; /* Space for toggle icon */
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1px; /* Align with input border */
+            top: 1px;   /* Align with input border */
+            bottom: 1px;/* Align with input border */
+            width: 45px;
+            background: transparent;
+            border: none;
+            border-left: 1px solid #FFDAB9;
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #A0522D; /* Sienna */
+            font-size: 1.3rem; /* Icon size */
+            transition: background-color 0.3s ease;
+        }
+        .toggle-password:hover, .toggle-password:focus {
+            background-color: rgba(255, 218, 185, 0.5); /* Light peach hover */
+            outline: none;
+        }
+
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #FF7F50, #FF6347); /* Coral to Tomato */
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 100, 70, 0.3);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(to right, #FF6347, #FF4500); /* Tomato to OrangeRed */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 100, 70, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(255, 100, 70, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            padding: 15px;
+            font-size: 0.85rem;
+            color: rgba(74, 63, 53, 0.8); /* Semi-transparent dark brown */
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .login-container {
+                padding: 30px 20px;
+                margin: 0 10px; /* Add some margin on small screens */
+            }
+
+            .logo {
+                font-size: 3.5rem;
+                margin-bottom: 25px;
+            }
+
+            .input-field {
+                padding: 12px 15px;
+                font-size: 0.95rem;
+            }
+             .password-wrapper .input-field {
+                padding-right: 40px;
+            }
+            .toggle-password {
+                 width: 40px;
+                 font-size: 1.2rem;
+            }
+
+
+            .submit-btn {
+                padding: 14px;
+                font-size: 1rem;
+            }
+
+            .footer {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+             .logo {
+                font-size: 3rem;
+             }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <div class="login-container">
+            <h1 class="logo">LuLuMo</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Eメール</label>
+                    <input type="email" id="email" name="email" class="input-field" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">パスワード</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" class="input-field" placeholder="あなたのパスワード" required>
+                        <button type="button" id="togglePassword" class="toggle-password" aria-label="パスワードの表示を切り替える">
+                            <span id="toggleIcon">👁️</span>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">ログイン</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        &copy; 2025 Happyman. All rights reserved.
+    </footer>
+
+    <script>
+        const togglePasswordButton = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggleIcon');
+
+        togglePasswordButton.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // アイコンを変更 (👁️ と 🙈 を切り替え)
+            if (type === 'password') {
+                toggleIcon.textContent = '👁️';
+            } else {
+                toggleIcon.textContent = '🙈';
+            }
+        });
+
+        // フォーム送信のダミー処理 (実際の送信処理はFlask側で)
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // デフォルトの送信をキャンセル
+            // ここで入力値のバリデーションなどを行っても良い
+            console.log('Email:', document.getElementById('email').value);
+            console.log('Password:', document.getElementById('password').value);
+            // alert('ログイン試行 (実際の送信は行われません)');
+            // Flaskへの送信処理をここに追加 (例: fetch API を使用)
+        });
+    </script>
+
+</body>
+</html>
